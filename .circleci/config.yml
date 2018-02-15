@@ -53,7 +53,7 @@ jobs:
 
             docker login -u  $DOCKER_USER -p $DOCKER_PASS
             docker tag cibuilds/snapcraft:$CIRCLE_SHA1 cibuilds/snapcraft:latest
-            docker tag cibuilds/snapcraft:$CIRCLE_SHA1 cibuilds/snapcraft:beta
+            docker tag cibuilds/snapcraft:$CIRCLE_SHA1 cibuilds/snapcraft:stable
             docker push cibuilds/snapcraft:$CIRCLE_SHA1
-            docker push cibuilds/snapcraft:beta
+            docker push cibuilds/snapcraft:stable
             docker push cibuilds/snapcraft:latest

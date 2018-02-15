@@ -1,4 +1,4 @@
-FROM snapcore/snapcraft:beta
+FROM snapcore/snapcraft:stable
 
 LABEL maintainer="Ricardo N Feliciano (FelicianoTech) <ricardo@feliciano.tech>"
 

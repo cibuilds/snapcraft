@@ -3,3 +3,7 @@
 Docker image containing [Snapcraft](https://snapcraft.io) (a Linux package management tool) designed to run well in Continuous Integration environments such as CircleCI.
 
 Unlike most images under the `cibuilds` Docker Hub org, this image is based on an upstream [`snapcore/snapcraft`](https://hub.docker.com/r/snapcore/snapcraft) image.
+
+## Use
+
+An example of how to use this Snapcraft Docker image can be found in [CircleCI Docs](https://circleci.com/docs/2.0/build-publish-snap-packages/).

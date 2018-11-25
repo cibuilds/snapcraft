@@ -16,7 +16,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: docker:stable-git
+      - image: cibuilds/docker:18.09
     steps:
       - checkout
       - setup_remote_docker:
@@ -27,7 +27,7 @@ jobs:
 
   publish:
     docker:
-      - image: docker:stable-git
+      - image: cibuilds/docker:18.09
     steps:
       - checkout
       - setup_remote_docker:

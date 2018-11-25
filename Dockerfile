@@ -2,7 +2,7 @@ FROM snapcore/snapcraft:stable
 
 LABEL maintainer="Ricardo N Feliciano (FelicianoTech) <Ricardo@Feliciano.Tech>"
 
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
 	curl \
 	git \
 	jq \

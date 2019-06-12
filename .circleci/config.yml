@@ -1,5 +1,6 @@
+version: 2.1
+
 workflows:
-  version: 2
   main:
     jobs:
       - build
@@ -10,9 +11,26 @@ workflows:
             branches:
               only: master
           context: org-global
+  weekly-update:
+    triggers:
+      - schedule:
+          cron: "0 10 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
+      - publish:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+          context: org-global
 
-
-version: 2
 jobs:
   build:
     docker:

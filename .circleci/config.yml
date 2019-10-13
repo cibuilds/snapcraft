@@ -34,42 +34,25 @@ workflows:
 jobs:
   build:
     docker:
-      - image: cibuilds/docker:18.09
+      - image: cimg/base:2019.10
     steps:
       - checkout
       - setup_remote_docker
       - run:
-          name: "Build Docker image"
+          name: "Build images"
           command: ./build-images.sh
 
   publish:
     docker:
-      - image: cibuilds/docker:18.09
+      - image: cimg/base:2019.10
     steps:
       - checkout
       - setup_remote_docker
       - run:
-          name: "Verify if our previous image is available"
-          command: |
-            if ! docker image inspect cibuilds/snapcraft:$CIRCLE_SHA1; then
-              echo "Previously built image not found for some reason. Building."
-              docker build -t cibuilds/snapcraft:$CIRCLE_SHA1 .
-            fi
+          name: "Build images"
+          command: ./build-images.sh
       - run:
           name: "Publish images to Docker Hub if neccessary"
           command: |
-            docker images --format "{{.ID}}" cibuilds/snapcraft:$CIRCLE_SHA1 > current_image_id
-            [ -s current_image_id ] || echo "n/a" > current_image_id
-
-            # if IDs match, this image already exists and has been pushed so don't do it again
-            if docker images --format "{{.ID}}" cibuilds/snapcraft:latest | diff - current_image_id;then
-              echo "The image just built (cibuilds/snapcraft:${CIRCLE_SHA1}) is the same as latest (cibuilds/snapcraft:latest). So, we're not going to push to Docker Hub."
-              exit
-            fi
-
-            docker login -u  $DOCKER_USER -p $DOCKER_PASS
-            docker tag cibuilds/snapcraft:$CIRCLE_SHA1 cibuilds/snapcraft:latest
-            docker tag cibuilds/snapcraft:$CIRCLE_SHA1 cibuilds/snapcraft:stable
-            docker push cibuilds/snapcraft:$CIRCLE_SHA1
-            docker push cibuilds/snapcraft:stable
-            docker push cibuilds/snapcraft:latest
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push cibuilds/snapcraft

@@ -14,17 +14,20 @@ RUN apt-get update && apt-get install -y \
 # Manually install the core snap, a dependency of the snapcraft snap
 RUN curl -L $(curl -H "X-Ubuntu-Series: 16" "https://api.snapcraft.io/api/v1/snaps/details/core" | jq ".download_url" -r) --output core.snap && \
 	mkdir -p /snap/core && \
-	unsquashfs -d /snap/core/current core.snap
+	unsquashfs -d /snap/core/current core.snap && \
+	rm -f core.snap
 
 # Manually install the core18 snap, the main point of this image
 RUN curl -L $(curl -H "X-Ubuntu-Series: 16" "https://api.snapcraft.io/api/v1/snaps/details/core18" | jq ".download_url" -r) --output core18.snap && \
 	mkdir -p /snap/core18 && \
-	unsquashfs -d /snap/core18/current core18.snap
+	unsquashfs -d /snap/core18/current core18.snap && \
+	rm -f core18.snap
 
 # Manually install the snapcraft snap, so we can use it to build new snaps
 RUN curl -L $(curl -H "X-Ubuntu-Series: 16" "https://api.snapcraft.io/api/v1/snaps/details/snapcraft?channel=stable" | jq ".download_url" -r) --output snapcraft.snap && \
 	mkdir -p /snap/snapcraft && \
-	unsquashfs -d /snap/snapcraft/current snapcraft.snap
+	unsquashfs -d /snap/snapcraft/current snapcraft.snap && \
+	rm -f snapcraft.snap
 
 # Install the Snapcraft runner
 COPY snapcraft-wrapper /snap/bin/snapcraft

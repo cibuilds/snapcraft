@@ -84,12 +84,14 @@ RUN apt-get update && apt-get install -y \
 # as the main point of this image.
 RUN curl -L $(curl -H "X-Ubuntu-Series: 16" "https://api.snapcraft.io/api/v1/snaps/details/core" | jq ".download_url" -r) --output core.snap && \
 	mkdir -p /snap/core && \
-	unsquashfs -d /snap/core/current core.snap
+	unsquashfs -d /snap/core/current core.snap && \
+	rm -f core.snap
 
 # Manually install the snapcraft snap, so we can use it to build new snaps
 RUN curl -L $(curl -H "X-Ubuntu-Series: 16" "https://api.snapcraft.io/api/v1/snaps/details/snapcraft?channel=stable" | jq ".download_url" -r) --output snapcraft.snap && \
 	mkdir -p /snap/snapcraft && \
-	unsquashfs -d /snap/snapcraft/current snapcraft.snap
+	unsquashfs -d /snap/snapcraft/current snapcraft.snap && \
+	rm -f snapcraft.snap
 
 # Install the Snapcraft runner
 COPY snapcraft-wrapper /snap/bin/snapcraft

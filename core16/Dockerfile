@@ -112,4 +112,4 @@ WORKDIR /root/project
 # a majority of snaps. This increases build times which isn't good in CI.
 # The echo statement allows us to break the cache for this step more easily 
 # while also providing context.
-RUN apt-get update && echo "Apt index last updated October 13, 2019 at the earliest."
+RUN apt-get update && echo "Apt index last updated January 12, 2020 at the earliest."

@@ -1,14 +1,12 @@
 # vim:set ft=dockerfile:
 
 # Ubuntu 18.04 based image to match the core18 snap
-FROM cimg/base:2019.11
+FROM cimg/base:2020.05
 
 LABEL maintainer="Ricardo N Feliciano (FelicianoTech) <Ricardo@Feliciano.Tech>"
 
 RUN apt-get update && apt-get install -y \
-		locales \
-		squashfs-tools \
-		sudo && \
+		squashfs-tools && \
 	rm -rf /var/lib/apt/lists/*
 
 # Manually install the core snap, a dependency of the snapcraft snap
@@ -32,20 +30,13 @@ RUN curl -L $(curl -H "X-Ubuntu-Series: 16" "https://api.snapcraft.io/api/v1/sna
 # Install the Snapcraft runner
 COPY snapcraft-wrapper /snap/bin/snapcraft
 
-# Generate locale
-RUN locale-gen en_US.UTF-8
 
 # Set the proper environment
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
 ENV PATH=/snap/bin:$PATH
-
-WORKDIR /root/project
 
 # This run step is normally bad to have by itself however without it, users of 
 # this image will need to manually run `apt-get update` before they can build 
 # a majority of snaps. This increases build times which isn't good in CI.
 # The echo statement allows us to break the cache for this step more easily 
 # while also providing context.
-RUN apt-get update && echo "Apt index last updated January 12, 2020 at the earliest."
+RUN apt-get update && echo "Apt index last updated May the 4th be with you, 2020 at the earliest."

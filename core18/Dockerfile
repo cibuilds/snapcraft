@@ -1,30 +1,30 @@
 # vim:set ft=dockerfile:
 
 # Ubuntu 18.04 based image to match the core18 snap
-FROM cimg/base:2020.05
+FROM cimg/base:2020.09-18.04
 
 LABEL maintainer="Ricardo N Feliciano (FelicianoTech) <Ricardo@Feliciano.Tech>"
 
-RUN apt-get update && apt-get install -y \
+RUN sudo apt-get update && sudo apt-get install -y \
 		squashfs-tools && \
-	rm -rf /var/lib/apt/lists/*
+	sudo rm -rf /var/lib/apt/lists/*
 
 # Manually install the core snap, a dependency of the snapcraft snap
 RUN curl -L $(curl -H "X-Ubuntu-Series: 16" "https://api.snapcraft.io/api/v1/snaps/details/core" | jq ".download_url" -r) --output core.snap && \
-	mkdir -p /snap/core && \
-	unsquashfs -d /snap/core/current core.snap && \
+	sudo mkdir -p /snap/core && \
+	sudo unsquashfs -d /snap/core/current core.snap && \
 	rm -f core.snap
 
 # Manually install the core18 snap, the main point of this image
 RUN curl -L $(curl -H "X-Ubuntu-Series: 16" "https://api.snapcraft.io/api/v1/snaps/details/core18" | jq ".download_url" -r) --output core18.snap && \
-	mkdir -p /snap/core18 && \
-	unsquashfs -d /snap/core18/current core18.snap && \
+	sudo mkdir -p /snap/core18 && \
+	sudo unsquashfs -d /snap/core18/current core18.snap && \
 	rm -f core18.snap
 
 # Manually install the snapcraft snap, so we can use it to build new snaps
 RUN curl -L $(curl -H "X-Ubuntu-Series: 16" "https://api.snapcraft.io/api/v1/snaps/details/snapcraft?channel=stable" | jq ".download_url" -r) --output snapcraft.snap && \
-	mkdir -p /snap/snapcraft && \
-	unsquashfs -d /snap/snapcraft/current snapcraft.snap && \
+	sudo mkdir -p /snap/snapcraft && \
+	sudo unsquashfs -d /snap/snapcraft/current snapcraft.snap && \
 	rm -f snapcraft.snap
 
 # Install the Snapcraft runner
@@ -39,4 +39,4 @@ ENV PATH=/snap/bin:$PATH
 # a majority of snaps. This increases build times which isn't good in CI.
 # The echo statement allows us to break the cache for this step more easily 
 # while also providing context.
-RUN apt-get update && echo "Apt index last updated May the 4th be with you, 2020 at the earliest."
+RUN sudo apt-get update && echo "Apt index last updated September 4th, 2020 at the earliest."

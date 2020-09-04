@@ -13,8 +13,8 @@ RUN sudo apt-get update && sudo apt-get install -y \
 
 # Manually install the core snap, a dependency of the snapcraft snap
 RUN curl -L $(curl -H "X-Ubuntu-Series: 16" "https://api.snapcraft.io/api/v1/snaps/details/core" | jq ".download_url" -r) --output core.snap && \
-	mkdir -p /snap/core && \
-	unsquashfs -d /snap/core/current core.snap && \
+	sudo mkdir -p /snap/core && \
+	sudo unsquashfs -d /snap/core/current core.snap && \
 	rm -f core.snap
 
 # Manually install the core18 snap, a dependency of the snapcraft snap
@@ -46,4 +46,4 @@ ENV PATH=/snap/bin:$PATH
 # a majority of snaps. This increases build times which isn't good in CI.
 # The echo statement allows us to break the cache for this step more easily 
 # while also providing context.
-RUN sudo apt-get update && echo "Apt index last updated September 3rd, 2020 at the earliest."
+RUN sudo apt-get update && echo "Apt index last updated September 4th, 2020 at the earliest."

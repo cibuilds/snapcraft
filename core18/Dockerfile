@@ -6,7 +6,9 @@ FROM cimg/base:2020.09-18.04
 LABEL maintainer="Ricardo N Feliciano (FelicianoTech) <Ricardo@Feliciano.Tech>"
 
 RUN sudo apt-get update && sudo apt-get install -y \
-		squashfs-tools && \
+		snapd \
+		squashfs-tools \
+	&& \
 	sudo rm -rf /var/lib/apt/lists/*
 
 # Manually install the core snap, a dependency of the snapcraft snap

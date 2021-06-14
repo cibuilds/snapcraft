@@ -1,7 +1,7 @@
 # vim:set ft=dockerfile:
 
 # Ubuntu 20.04 based image to match the core20 snap
-FROM cimg/base:2020.09
+FROM cimg/base:2021.04
 
 LABEL maintainer="Ricardo N Feliciano (FelicianoTech) <Ricardo@Feliciano.Tech>"
 

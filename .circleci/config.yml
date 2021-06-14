@@ -57,7 +57,5 @@ jobs:
           name: "Publish images to Docker Hub if neccessary"
           command: |
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-            docker push cibuilds/snapcraft:core
-            docker push cibuilds/snapcraft:core16
             docker push cibuilds/snapcraft:core18
             docker push cibuilds/snapcraft:core20

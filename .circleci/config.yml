@@ -9,7 +9,7 @@ workflows:
             - build
           filters:
             branches:
-              only: master
+              only: trunk
           context: org-global
   weekly-update:
     triggers:
@@ -17,18 +17,18 @@ workflows:
           cron: "0 10 * * 1"
           filters:
             branches:
-              only: master
+              only: trunk
     jobs:
       - build:
           filters:
             branches:
-              only: master
+              only: trunk
       - publish:
           requires:
             - build
           filters:
             branches:
-              only: master
+              only: trunk
           context: org-global
 
 jobs:

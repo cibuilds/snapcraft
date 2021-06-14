@@ -34,20 +34,22 @@ workflows:
 jobs:
   build:
     docker:
-      - image: cimg/base:2020.09
+      - image: cimg/base:2021.04
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: "20.10.6"
       - run:
           name: "Build images"
           command: ./build-images.sh
 
   publish:
     docker:
-      - image: cimg/base:2020.09
+      - image: cimg/base:2021.04
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: "20.10.6"
       - run:
           name: "Build images"
           command: ./build-images.sh

@@ -46,4 +46,4 @@ ENV PATH=/snap/bin:$PATH
 # a majority of snaps. This increases build times which isn't good in CI.
 # The echo statement allows us to break the cache for this step more easily 
 # while also providing context.
-RUN sudo apt-get update && echo "Apt index last updated September 4th, 2020 at the earliest."
+RUN sudo apt-get update && echo "Apt index last updated June 14th, 2021 at the earliest."
